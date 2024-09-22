@@ -1,0 +1,76 @@
+﻿@model List<Mark>
+
+<header class="contentHead">
+    <form class="createButton" method="get" asp-controller="Calendar" asp-action="Create">
+        <input name="year" type="hidden" value="@Model[0].DateTime.Year" />
+        <input name="month" type="hidden" value="@Model[0].DateTime.Month" />
+        <input name="day" type="hidden" value="@Model[0].DateTime.Day" />
+
+        <input type="submit" value="Добавить отметку" class="eventButton" />
+    </form>
+
+    <div class="listTitles">
+        <div>Название</div>
+        <div>Описание</div>
+        <div>Время</div>
+        <div>Дата</div>
+        <div>Доступные операции</div>
+    </div>
+</header>
+<div class="content">
+    <div class="sidebar">
+        <form method="get" asp-controller="Calendar" asp-action="Details">
+            <input name="year" type="hidden" value="@Model[0].DateTime.Year"/>
+            <input name="month" type="hidden" value="@Model[0].DateTime.Month"/>
+            <input name="day" type="hidden" value="@Model[0].DateTime.Day"/>
+
+            <label for="searchline">Ключевые слова</label>
+            <input name="searchline" type="text" />
+
+            <br />
+
+            <label for="sort">Фильтр</label>
+            <select name="sort">
+                <option value="Title">По названию</option>
+                <option value="DateTime">По времени</option>
+            </select>
+
+            <select name="sortDir">
+                <option value="Discend">По убыванию</option>
+                <option value="Ascend">По возростанию</option>
+            </select>
+
+            <br />
+
+            <input type="submit" value="Применить" />
+        </form>
+    </div>
+    <ul class="contentList">
+        @foreach (var item in Model)
+        {
+            <li class="listItem">
+                <div>@item.Title</div>
+                <div>@item.Description</div>
+                <div>@item.DateTime.ToShortTimeString()</div>
+                <div>@item.DateTime.ToShortDateString()</div>
+                <div>
+                    <form method="get" asp-controller="Calendar" asp-action="Edit">
+                        <input type="number" name="id" value="@item.Id" hidden />
+                        <input type="submit" value="Редактировать" class="eventButton" />
+                    </form>
+
+                    <form method="get" asp-controller="Calendar" asp-action="Delete">
+                        <input type="number" name="id" value="@item.Id" hidden />
+                        <input type="submit" value="Удалить" class="eventButton" />
+                    </form>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+
+<br />
+
+<button>
+    <a class="clear" asp-controller="Calendar" asp-action="Index">Вернуться к календарю</a>
+</button>

@@ -1,0 +1,80 @@
+﻿@model List<Worker>
+
+
+<header class="contentHead">
+    <form class="createButton" method="get" asp-controller="Worker" asp-action="Create">
+        <input type="submit" value="Добавить работника" class="eventButton" />
+    </form>
+
+    <div class="listTitles">
+        <div>Имя</div>
+        <div>Фамилия</div>
+        <div>Должность</div>
+        <div>Количество действий</div>
+        <div>Доступные операции</div>
+    </div>
+</header>
+
+<div class="content">
+    <div class="sidebar">
+        <form method="get" asp-controller="Worker" asp-action="Index">
+            <label for="searchline">Ключевые слова</label>
+            <input name="searchline" type="text" />
+
+            <br />
+
+            <label for="sort">Фильтр</label>
+            <select name="sort">
+                <option value="FirstName">По имени</option>
+                <option value="LastName">По фамилии</option>
+                <option value="Position">По должности</option>
+            </select>
+
+            <select name="sortDir">
+                <option value="Discend">По убыванию</option>
+                <option value="Ascend">По возрастанию</option>
+            </select>
+
+            <br />
+
+            <input type="submit" value="Применить" />
+        </form>
+    </div>
+
+    <ul class="contentList">
+        @foreach (var item in @Model)
+        {
+            <li class="listItem">
+                <div>@item.FirstName</div>
+                <div>@item.LastName</div>
+                <div>@item.Position</div>
+                <div>
+                    @if (@item.Actions != null)
+                    {
+                        @item.Actions.Count()
+                    }
+                    else
+                    {
+                        <b>0</b>
+                    }
+                </div>
+                <div>
+                    <form method="get" asp-controller="Worker" asp-action="Details">
+                        <input type="number" name="id" value="@item.Id" hidden />
+                        <input type="submit" value="Просмотреть" class="eventButton" />
+                    </form>
+
+                    <form method="get" asp-controller="Worker" asp-action="Edit">
+                        <input type="number" name="id" value="@item.Id" hidden />
+                        <input type="submit" value="Редактировать" class="eventButton" />
+                    </form>
+
+                    <form method="get" asp-controller="Worker" asp-action="Delete">
+                        <input type="number" name="id" value="@item.Id" hidden />
+                        <input type="submit" value="Удалить" class="eventButton" />
+                    </form>
+                </div>
+            </li>
+        }
+    </ul>
+</div>

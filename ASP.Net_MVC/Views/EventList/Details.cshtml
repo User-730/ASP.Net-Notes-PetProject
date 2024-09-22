@@ -1,0 +1,28 @@
+﻿@model EventAction
+
+<div class="details">
+    <div>
+        <div>Название:</div> 
+        <div>@Model.Title</div>
+    </div>  
+    <div>
+        <div>Дата совершения:</div>
+        <div>@Model.EventDate.ToShortDateString()</div>
+    </div>
+    <div>
+        <div>Тип действия:</div>
+        <div>@Model.Type</div>
+    </div>
+    <div>
+        <div>Исполнитель:</div>
+        <div>@Model.Worker.FirstName @Model.Worker.LastName</div>
+    </div>
+</div>
+
+<br />
+
+<div class="detailOneButton">
+    <button>
+        <a class="clear" asp-controller="EventList" asp-action="Index">Вернуться к списку</a>
+    </button>
+</div>

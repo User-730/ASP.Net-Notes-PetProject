@@ -1,0 +1,30 @@
+﻿<form id="Create" class="details" method="post" asp-controller="Worker" asp-action="Create">
+    <div>
+        <label for="FirstName">Имя</label>
+        <input name="FirstName" type="text" required minlength="2" maxlength="12" />
+        
+    </div>
+
+    <div>
+        <label for="LastName">Фамилия</label>
+        <input name="LastName" type="text" required minlength="3" maxlength="15" />
+    </div>
+
+    <div>
+        <label for="Position">Должность</label>
+        <input name="Position" type="text" required minlength="3" maxlength="15" />
+    </div>
+</form>
+
+<br />
+
+<div class="detailButtons">
+    <div>
+        <input form="Create" type="submit" value="Добавить" />
+    </div>
+    <div>
+        <button>
+            <a class="clear" asp-controller="Worker" asp-action="Index">Вернуться к списку</a>
+        </button>
+    </div>
+</div>

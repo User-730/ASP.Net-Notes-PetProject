@@ -1,0 +1,95 @@
+﻿@model List<DateTime>
+
+<br />
+<div class="calendarTitle">
+    <span>
+        @Calendar.MonthsNames[Model[20].Month - 1] - @Model[20].Year
+    </span>
+</div>
+<br />
+<div class="calendarButtons">
+    <div>
+        <form method="get" asp-controller="Calendar" asp-action="Index">
+            <input type="number" name="year" value="@Model[20].Year" hidden />
+            <input type="number" name="month" value="@(Model[20].Month - 1)" hidden />
+            <input type="submit" value="<<Предыдущий месяц" />
+        </form>
+    </div>
+    <div>
+        <button>
+            <a class="clear" asp-controller="Calendar" asp-action="Create">Создать новую отметку</a>
+        </button>
+    </div>
+    <div>
+        <form asp-controller="Calendar" asp-action="Index">
+            <input name="year" type="number" min="2000" max="2040"/>
+            <select name="month">
+                @for(int month = 0; month < Calendar.MonthsNames.Count(); month++)
+                {
+                    <option value="@(month + 1)">@Calendar.MonthsNames[month]</option>
+                }
+            </select>
+            <input type="submit" value="Перейти"/>
+        </form>
+    </div>
+    <div>
+        <form method="get" asp-controller="Calendar" asp-action="Index">
+            <input type="number" name="year" value="@Model[20].Year" hidden />
+            <input type="number" name="month" value="@(Model[20].Month + 1)" hidden />
+            <input type="submit" value="Следующий месяц>>" />
+        </form>
+    </div>
+</div>
+<br />
+<table class="calendar">
+    <tr class="calendarTitles">
+        <th>Понедельник</th>
+        <th>Вторник</th>
+        <th>Среда</th>
+        <th>Четверг</th>
+        <th>Пятница</th>
+        <th>Суббота</th>
+        <th>Воскресенье</th>
+    </tr>
+    @{
+        int num = 0;
+        string dayType = "monthDay";
+        List<Mark> marks = ViewBag.Marks;
+        string actionType = "Create";
+    }
+    @for(int week = 1; week <= Model.Count/7; week++)
+    {
+        <tr>
+            @for (int d = 1; d <= 7; d++)
+            {
+                List<Mark> subMarks = marks.Where(m => m.DateTime.Date == Model[num].Date).ToList();
+
+                if (Model[num].Day == DateTime.Today.Day && Model[num].Month == DateTime.Today.Month) dayType = "today";
+                else if (Model[num].Month != Model[20].Month) dayType = "additionDay";
+                else if (Model[num].DayOfWeek == DayOfWeek.Saturday || Model[num].DayOfWeek == DayOfWeek.Sunday) dayType = "weekend";
+                else dayType = "monthDay";
+
+
+                if (subMarks.Count() != 0) actionType = "Details";
+                else actionType = "Create";
+
+                <td class="@dayType">
+                    <a class="cell-link" asp-controller="Calendar" asp-action="@actionType"
+                       asp-route-year="@Model[num].Year" asp-route-month="@Model[num].Month" asp-route-day="@Model[num].Day">
+
+                        <div class="dayNumber">
+                            @Model[num].Day
+                        </div>
+                        @if (subMarks.Count() != 0)
+                        {
+                            <div class="markNumber">
+                                [@subMarks.Count()]
+                            </div>
+                        }
+                    </a>
+                </td>
+                num++;
+            }
+        </tr>
+    }
+</table>

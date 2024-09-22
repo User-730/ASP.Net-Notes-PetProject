@@ -1,0 +1,41 @@
+﻿@model Mark
+
+<form id="Edit" class="details" method="post" asp-controller="Calendar" asp-action="Edit">
+    <input name="id" type="hidden" value="@Model.Id" />
+    <div>
+        <label for="title">Название</label>
+        <input name="title" type="text" value="@Model.Title" required minlength="3" maxlength="15" />
+    </div>
+
+    <div>
+        <label for="description">Описание</label>
+        <input name="description" type="text" value="@Model.Description" required minlength="3" maxlength="15"/>
+    </div>
+
+    <div>
+        <label for="date">Дата</label>
+        <input name="date" type="date" value="@Calendar.FormatToDateString(Model.DateTime)" />
+    </div>
+
+    <div>
+        <label for="time">Время</label>
+        <input name="time" type="time" value="@Model.DateTime.Hour:@Model.DateTime.Minute" />
+    </div>
+</form>
+
+<br />
+
+<div class="detailButtons">
+    <div>
+        <input form="Edit" type="submit" value="Изменить" />
+    </div>
+    <div>
+        <button>
+            <a class="clear" asp-controller="Calendar" asp-action="Details"
+               asp-route-year="@Model.DateTime.Year"
+               asp-route-month="@Model.DateTime.Month"
+               asp-route-day="@Model.DateTime.Day">
+                Вернуться к списку</a>
+        </button>
+    </div>
+</div>

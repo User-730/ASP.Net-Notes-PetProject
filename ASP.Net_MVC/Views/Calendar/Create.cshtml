@@ -1,0 +1,34 @@
+﻿<form id="Create" class="details" method="post" asp-controller="Calendar" asp-action="Create">
+    <div>
+        <label for="title">Название</label>
+        <input name="title" type="text" required minlength="3" maxlength="15" />
+    </div>
+
+    <div>
+        <label for="description">Описание</label>
+        <input name="description" type="text" required minlength="3" maxlength="15" />
+    </div>
+
+    <div>
+        <label for="date">Дата</label>
+        <input name="date" type="date" value="@Calendar.FormatToDateString(ViewBag.DateTime)" />
+    </div>
+
+    <div>
+        <label for="time">Время</label>
+        <input name="time" type="time"/>
+    </div>
+</form>
+
+<br />
+
+<div class="detailButtons">
+    <div>
+        <input form="Create" type="submit" value="Добавить" />
+    </div>
+    <div>
+        <button>
+            <a class="clear" asp-controller="Calendar" asp-action="Index">Вернуться к календарю</a>
+        </button>
+    </div>
+</div>

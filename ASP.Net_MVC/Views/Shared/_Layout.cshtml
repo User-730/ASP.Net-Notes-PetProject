@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ASP.Net_MVC</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+<body>
+    @{
+        List<NavigationTitle> navItems = new List<NavigationTitle>();
+
+        navItems.Add(new NavigationTitle("EventList", "Лента событий"));
+        navItems.Add(new NavigationTitle("Worker", "Список работников"));
+        navItems.Add(new NavigationTitle("Calendar", "Календарь действий"));
+    }
+    <header class="navigation">
+        @for (int num = 0; num < navItems.Count(); num++)
+        {
+            <div>
+                    <a class="clear" asp-controller="@navItems[num].controllerName" asp-action="Index">@navItems[num].navName</a>
+            </div>
+        }
+    </header>
+
+    <div>
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

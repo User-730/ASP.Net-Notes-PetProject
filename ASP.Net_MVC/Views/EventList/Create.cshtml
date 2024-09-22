@@ -1,0 +1,41 @@
+﻿@model List<Worker>
+
+<form id="Create" class="details" method="post" asp-controller="EventList" asp-action="Create">
+    <div>
+        <label for="Title">Название</label>
+        <input name="Title" type="text" required minlength="2" maxlength="15" />
+    </div>
+
+    <div>
+        <label for="EventDate">Дата совершения</label>
+        <input name="EventDate" type="date"/>
+    </div>
+
+    <div>
+        <label for="Type">Тип действия</label>
+        <input name="Type" type="text" required minlength="3" maxlength="15" />
+    </div>
+
+    <div>
+        <label for="WorkerId">Исполнитель</label>
+        <select name="WorkerId">
+            @foreach (var item in @Model)
+            {
+                <option value="@item.Id">@item.FirstName @item.LastName</option>
+            }
+        </select>
+    </div>
+</form>
+
+<br />
+
+<div class="detailButtons">
+    <div>
+        <input form="Create" type="submit" value="Добавить" />
+    </div>
+    <div>
+        <button>
+            <a class="clear" asp-controller="EventList" asp-action="Index">Вернуться к списку</a>
+        </button>
+    </div>
+</div>

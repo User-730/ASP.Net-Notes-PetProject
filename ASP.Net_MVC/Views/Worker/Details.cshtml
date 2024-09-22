@@ -1,0 +1,49 @@
+﻿@model Worker
+
+<br />
+<div class="details">
+    Общая информация
+    <div>
+        <div>Имя:</div> 
+        <div>@Model.FirstName</div>
+    </div>
+    <div>
+        <div>Фамилия:</div>
+        <div>@Model.LastName</div>
+    </div>
+    <div>
+        <div>Должность:</div>
+        <div>@Model.Position</div>
+    </div>
+</div>
+
+<br />
+<div class="details">
+    Действия
+    @if (Model.Actions != null)
+    {
+        <div>
+            <div>Название</div>
+            <div>Дата совершения</div>
+        </div>
+        @foreach (var item in Model.Actions)
+        {
+            <div>
+                <div>@item.Title </div>
+                <div>@item.EventDate.ToShortDateString() </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div>Отсутсвуют</div>
+    }
+</div>
+
+<br />
+
+<div class="detailOneButton">
+    <button>
+        <a class="clear" asp-controller="Worker" asp-action="Index">Вернуться к списку</a>
+    </button>
+</div>
